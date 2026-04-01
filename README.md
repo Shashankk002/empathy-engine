@@ -1,4 +1,4 @@
-# 🎙 Empathy Engine
+# Empathy Engine
 
 An AI-powered Text-to-Speech service that dynamically modulates vocal characteristics based on the detected emotion of the input text. The Empathy Engine analyzes the emotional content of each sentence and adjusts rate, pitch, and volume to produce expressive, human-like speech.
 

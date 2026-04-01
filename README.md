@@ -91,7 +91,7 @@ Input text is split into sentences using NLTK's `sent_tokenize`. Each sentence i
 - Voice consistency across sentences is limited by edge-tts generating each sentence independently
 - Pitch manipulation is constrained to edge-tts native parameters; full acoustic control (shimmer, jitter, formants) would require a vocoder like Praat or a neural TTS like ElevenLabs
 - Model accuracy drops on very short or ambiguous sentences
-- The model's confidence score does not always reflect linguistic emphasis. For example, "This is the BEST DAY EVER" may score lower confidence than "This is good" for the same emotion, since the model reads semantic content rather than typographic emphasis.\
+- The model's confidence score does not always reflect linguistic emphasis. For example, "This is the BEST DAY EVER" may score lower confidence than "This is good" for the same emotion, since the model reads semantic content rather than typographic emphasis.
 
 ---
 

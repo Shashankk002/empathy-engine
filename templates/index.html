@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empathy Engine</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif; background: #f2f2f7; color: #1c1c1e; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 60px 20px; }
+        h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 6px; }
+        .subtitle { color: #8e8e93; font-size: 0.95rem; margin-bottom: 48px; letter-spacing: -0.1px; }
+        .card { background: #ffffff; border-radius: 22px; padding: 24px; width: 100%; max-width: 620px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        textarea { width: 100%; height: 130px; border: 1.5px solid #e5e5ea; border-radius: 14px; padding: 14px; font-size: 0.95rem; font-family: inherit; letter-spacing: -0.1px; resize: none; outline: none; color: #1c1c1e; background: #f9f9fb; }
+        textarea:focus { border-color: #007aff; background: #fff; }
+        button { width: 100%; margin-top: 12px; padding: 14px; background: #007aff; border: none; border-radius: 14px; color: #fff; font-size: 0.95rem; font-family: inherit; letter-spacing: -0.1px; cursor: pointer; font-weight: 600; transition: opacity 0.15s; }
+        button:hover { opacity: 0.85; }
+        button:disabled { opacity: 0.4; cursor: not-allowed; }
+        #results { margin-top: 20px; width: 100%; max-width: 620px; }
+        .sentence-card { background: #ffffff; border-radius: 18px; padding: 16px 18px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.07); display: flex; align-items: flex-start; gap: 12px; }
+        .emotion-badge { padding: 3px 10px; border-radius: 8px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; margin-top: 3px; letter-spacing: 0.2px; text-transform: uppercase; }
+        .joy { background: #fff3cd; color: #7a5c00; }
+        .anger { background: #ffe5e5; color: #c0392b; }
+        .fear { background: #ede8ff; color: #5b2d91; }
+        .sadness { background: #e1ecff; color: #1a4fa0; }
+        .disgust { background: #e3f5e3; color: #1a6b1a; }
+        .surprise { background: #fff0e0; color: #a05a00; }
+        .neutral { background: #f2f2f7; color: #636366; }
+        .sentence-text { color: #1c1c1e; font-size: 0.92rem; line-height: 1.5; letter-spacing: -0.1px; }
+        .confidence { color: #aeaeb2; font-size: 0.76rem; margin-top: 3px; }
+        audio { width: 100%; max-width: 620px; margin-top: 14px; border-radius: 14px; }
+        .loading { text-align: center; color: #8e8e93; font-size: 0.88rem; margin-top: 14px; display: none; letter-spacing: -0.1px; }
+    </style>
+</head>
+<body>
+    <h1>Empathy Engine</h1>
+    <p class="subtitle">Emotional speech synthesis, powered by AI</p>
+
+    <div class="card">
+        <textarea id="textInput" placeholder="Type something to speak..."></textarea>
+        <button id="generateBtn" onclick="generate()">Generate Speech</button>
+    </div>
+
+    <div class="loading" id="loading">Processing...</div>
+    <div id="results"></div>
+
+    <script>
+        async function generate() {
+            const text = document.getElementById('textInput').value.trim();
+            if (!text) return;
+
+            const btn = document.getElementById('generateBtn');
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+
+            btn.disabled = true;
+            btn.textContent = 'Generating...';
+            loading.style.display = 'block';
+            results.innerHTML = '';
+
+            const response = await fetch('/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text })
+            });
+
+            const data = await response.json();
+            loading.style.display = 'none';
+            btn.disabled = false;
+            btn.textContent = 'Generate Speech';
+
+            let html = '';
+            data.results.forEach(r => {
+                html += `
+                    <div class="sentence-card">
+                        <span class="emotion-badge ${r.emotion}">${r.emotion}</span>
+                        <div>
+                            <div class="sentence-text">${r.sentence}</div>
+                            <div class="confidence">${(r.score * 100).toFixed(0)}% confidence</div>
+                        </div>
+                    </div>`;
+            });
+
+            html += `<audio controls src="${data.audio}?t=${Date.now()}"></audio>`;
+            results.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

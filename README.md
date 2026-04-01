@@ -41,6 +41,17 @@ source venv/bin/activate
 pip install flask transformers torch edge-tts pydub nltk
 ```
 
+## Project Structure
+```
+empathy-engine/
+├── app.py              # Main Flask application with all logic
+├── emotion.py          # Standalone CLI version (for reference)
+├── templates/
+│   └── index.html      # Web UI
+├── static/             # Generated audio files served to browser
+└── README.md
+```
+
 ---
 
 ## Running the App

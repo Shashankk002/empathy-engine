@@ -64,7 +64,7 @@ We use `j-hartmann/emotion-english-distilroberta-base`, a RoBERTa-based transfor
 ### Emotion-to-Voice Mapping
 Vocal parameters (rate, pitch, volume) are mapped to each emotion based on empirical findings from:
 
-> Pol van Rijn, P. & Larrouy-Maestri, P. (2023). *Modelling individual and cross-cultural variation in the mapping of emotions to speech prosody*. Nature Human Behaviour, 7, 386–396. https://doi.org/10.1038/s41562-022-01505-5
+> van Rijn, P. & Larrouy-Maestri, P. (2023). *Modelling individual and cross-cultural variation in the mapping of emotions to speech prosody*. Nature Human Behaviour, 7, 386–396. https://doi.org/10.1038/s41562-022-01505-5
 
 The mappings are derived from Figure 2a of the paper, which reports global acoustic coefficients across corpora for RC2 (Loudness → volume), RC3 (Pitch and formants → pitch), and RC4 (Rhythm and tempo → rate):
 
@@ -97,5 +97,5 @@ Input text is split into sentences using NLTK's `sent_tokenize`. Each sentence i
 
 ## References
 
-- Pol van Rijn, P. & Larrouy-Maestri, P. (2023). Modelling individual and cross-cultural variation in the mapping of emotions to speech prosody. *Nature Human Behaviour*, 7, 386–396. https://doi.org/10.1038/s41562-022-01505-5
+- van Rijn, P. & Larrouy-Maestri, P. (2023). Modelling individual and cross-cultural variation in the mapping of emotions to speech prosody. *Nature Human Behaviour*, 7, 386–396. https://doi.org/10.1038/s41562-022-01505-5
 - Hartmann, J. et al. `j-hartmann/emotion-english-distilroberta-base`. Hugging Face. https://huggingface.co/j-hartmann/emotion-english-distilroberta-base
